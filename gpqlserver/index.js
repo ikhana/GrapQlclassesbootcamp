@@ -35,6 +35,25 @@ const resolvers ={
   Query: {
     students: () =>students,
   },
+  Mutation: {
+    addStudent: (_, {input})=>{
+      console.log(input);
+      students.push( {
+        name: input.name,
+        age: input.age,
+        email: input.email,
+        id: input.id
+      }
+      )
+      return{
+        name: input.name,
+        age: input.age,
+        email: input.email,
+        id: input.id
+        
+      }
+    }
+  }
 };
 const typeDefs = gql`
 type students {
@@ -43,9 +62,19 @@ type students {
   age : Int
   id: Int
 }
+
+input newStudent {
+  id: Int
+  name: String
+  email: String
+  age: Int
+}
  
   type Query {
     students: [students]
+  }
+  type Mutation {
+    addStudent(input: newStudent): students
   }
 `;
 // The ApolloServer constructor requires two parameters: your schema
